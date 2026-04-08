@@ -84,19 +84,21 @@ export const App = () => {
         <div className="bg-[#294C60] justify-center border border-[#467c9b] rounded-md w-[32%] p-3 ml-2">
           <h2 className="text-2xl text-center mb-2 underline">To-Do</h2>
           
-          <ul className="w-[90%]">
+          <ul className="w-[90%] ">
             {newState.map(task => {
               return(
-                <li key={task.id} className="text-2xl flex gap-2 my-2">
-                  <p>{task.taskName}</p>
+                <div className="w-[109%] border border-[#306482] rounded-md px-2 m-2 bg-[#0f4368]">
+                  <li key={task.id} className="text-2xl flex gap-2 my-2">
+                    <p className="w-[90%]">{task.taskName}</p>
 
-                  <button onClick={() => deleteTask(task)} className="text-xl">
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
-                  <hr className="text-[#FFEFD3]"/>
-                </li>
+                    <button onClick={() => deleteTask(task)} className="text-xl">
+                      <i className="fa-solid fa-trash"></i>
+                    </button>
+                  </li>
+                </div>
               )
             })}  
+            
           </ul>
         </div>
 
