@@ -13,9 +13,21 @@ const reducer = (state, action = {}) => {
   }
 }
 
+const initFunction = () => {
+	const items = [];
+	for (let i = 0; i < localStorage.length; i++) {  
+		const key = localStorage.key(i);
+		const value = localStorage.getItem(key); 
+		
+		items.push(JSON.parse(value));
+	}  
+		  
+	return items; 
+}
+
 export const App = () => {
   const {task, formState, onInputChange} = useForm({task: ''})
-  const [newState, dispatch] = useReducer(reducer, []);
+  const [newState, dispatch] = useReducer(reducer, [], initFunction);
 
   const addTask = (event) => { 
     event.preventDefault();
@@ -32,7 +44,7 @@ export const App = () => {
 
     dispatch(action)
 
-    console.log(newTask)
+    localStorage.setItem(newTask.id, JSON.stringify(newTask));
   }
 
   const deleteTask = ({id}) => {
@@ -42,6 +54,8 @@ export const App = () => {
     }
 
     dispatch(action)
+
+    localStorage.removeItem(id)
   }
 
   return (
@@ -79,6 +93,7 @@ export const App = () => {
                   <button onClick={() => deleteTask(task)} className="text-xl">
                     <i className="fa-solid fa-trash"></i>
                   </button>
+                  <hr className="text-[#FFEFD3]"/>
                 </li>
               )
             })}  
