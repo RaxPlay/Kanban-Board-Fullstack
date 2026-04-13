@@ -1,4 +1,4 @@
-import { useReducer, useRef, useState, useEffect, createContext } from "react";
+import { useReducer, createContext } from "react";
 import { DragDropProvider } from "@dnd-kit/react";
 import { useForm } from "./helpers/useForm";
 import { Draggable } from "./components/Draggable";
@@ -14,7 +14,7 @@ const reducer = (state, action = {}) => {
       return (
         state.filter(task => task.id !== action.payload)
       )
-    case 'MOVE-TASK':                    // ← new action
+    case 'MOVE-TASK':
       return state.map((task) =>
         task.id === action.payload.id
           ? { ...task, zone: action.payload.zone }
@@ -112,18 +112,22 @@ export const App = () => {
           </div>
 
           <div className="bg-[#294C60] border border-[#467c9b] rounded-md w-[32%] p-3">
-            <OnProgress id="progress" className="w-[40%]">
+            <OnProgress id="progress">
+              <ul className="w-[90%]">
               {newState
                 .filter((task) => task.zone === 'progress')
                 .map((task) => <Draggable key={task.id} id={task.id} />)}
+              </ul>
             </OnProgress>
           </div>
 
-          <div className="bg-[#294C60] flex justify-center border border-[#467c9b] rounded-md w-[32%] p-3">
+          <div className="bg-[#294C60] border border-[#467c9b] rounded-md w-[32%] p-3">
             <Done id='done'>
+              <ul className="w-[90%]">
               {newState
                 .filter((task) => task.zone === 'done')
                 .map((task) => <Draggable key={task.id} id={task.id} />)}
+              </ul>
             </Done>
           </div>
         </div>
